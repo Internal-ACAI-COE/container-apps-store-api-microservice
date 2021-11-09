@@ -33,7 +33,7 @@ jobs:
       - name: Build and push container image to registry
         uses: docker/build-push-action@v2
         with:
-          context: .
+          context: ./python-service
           push: true
           tags: acaiticapps.azurecr.io/dappr-app-demo:${{ github.sha }}
           file: python-service/Dockerfile
