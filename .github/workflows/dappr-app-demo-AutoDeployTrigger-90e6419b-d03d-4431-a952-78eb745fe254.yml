@@ -35,8 +35,8 @@ jobs:
         with:
           push: true
           tags: acaiticapps.azurecr.io/dappr-app-demo:${{ github.sha }}
-          context: .
-          file: ./python-service/Dockerfile
+          context: python-service
+          file: python-service/Dockerfile
 
 
   deploy:
