@@ -10,6 +10,11 @@ on:
   # Allow mannually trigger 
   workflow_dispatch:      
 
+env:
+  DAPR_APP_NAME: dappr-app-demo
+  AZ_RG_NAME: capps-demo-rg
+  REGISTRY_IMAGE: acaiticapps.azurecr.io/dappr-app-demo:${{ github.sha }}
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -57,4 +62,4 @@ jobs:
             az provider register --namespace Microsoft.Web
             az extension add --source https://workerappscliextension.blob.core.windows.net/azure-cli-extension/containerapp-0.1.12-py2.py3-none-any.whl --yes
             echo "Starting Deploying"
-            az containerapp update -n dappr-app-demo -g capps-demo-rg -i acaiticapps.azurecr.io/dappr-app-demo:${{ github.sha }} --registry-login-server acaiticapps.azurecr.io --registry-username  ${{ secrets.REGISTRY_USERNAME }} --registry-password ${{ secrets.REGISTRY_PASSWORD }} --debug --enable-dapr --dapr-app-port 5000 --dapr-app-id dappr-app-demo --dapr-components python-service/components.yaml
+            az containerapp update -n ${{ env.DAPR_APP_NAME }} -g ${{ env.AZ_RG_NAME }} -i ${{ env.REGISTRY_IMAGE }} --registry-login-server acaiticapps.azurecr.io --registry-username  ${{ secrets.REGISTRY_USERNAME }} --registry-password ${{ secrets.REGISTRY_PASSWORD }} --debug --enable-dapr --dapr-app-port 5000 --dapr-app-id dappr-app-demo --dapr-components python-service/components.yaml --secrets ${{ secrets.DAPR_APP_SECRETS }}
