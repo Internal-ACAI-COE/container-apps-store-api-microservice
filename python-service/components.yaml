@@ -1,8 +1,12 @@
-- name: statestore
-  type: state.redis
+- name: orders
+  type: state.azure.cosmosdb
   version: v1
   metadata:
-  - name: redisHost
-    value: localhost:6379
-  - name: redisPassword
-    value: ""
+  - name: url
+    value: https://capps-demo-db.documents.azure.com:443/
+  - name: database
+    value: "ordersDb"
+  - name: collection
+    value: "orders"
+  - name: masterkey
+    secretRef: 'masterkey'
